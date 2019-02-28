@@ -1,0 +1,87 @@
+.findAccount-css{
+    box-sizing: border-box;
+}
+
+.findAccount-css-left{
+    width: 50%;
+    float: left;
+}
+
+.findAccount-css-right{
+    width: 50%;
+    float : left;
+}
+
+.findAccount-form {
+    margin-top : 30px;
+    border: 1px solid #c4c4c4;
+    padding: 10px 30px 30px;
+}
+
+.findAccount-title {
+    /* text-align: center;
+    font-size: 25px;
+    font-weight: 300;
+    line-height: 30px; */
+    margin : -9px -30px 10px -28px;
+    padding: 15px 25px;
+    line-height: 30px;
+    font-size: 25px;
+    font-weight: 300;
+    color: #ADADAD;
+    text-align:center;
+    background: #f7f7f7;
+}
+
+.findAccount-form-input {
+    width: 100%;
+    height: 40px;
+    font-size: 15px;
+    margin-top: 5px;
+    margin-bottom: 10px;
+}
+
+.findEmail-btn {
+    background-color: #f0776c;
+    height: 40px;
+    /* width: 100px; */
+    width: 50%;
+    font-size: 15px;
+    border: 0;
+    border-radius: 5px;
+    cursor: pointer;
+    color: #fff;
+    /* margin-right: 60%; */
+}
+
+.findCancel-btn {
+    background-color: #bacadd; 
+    height: 40px;
+    /* width: 100px; */
+    width: 50%;
+    font-size: 15px;
+    border: 0;
+    border-radius: 5px;
+    cursor: pointer;
+    color: #fff;
+}
+
+.findPW-btn {
+    background-color: #f0776c;
+    height: 40px;
+    /* width: 100px; */
+    width: 50%;
+    font-size: 15px;
+    border: 0;
+    border-radius: 5px;
+    cursor: pointer;
+    color: #fff;
+    /* margin-right: 60%;
+    margin-left: 20px; */
+}
+
+.findAccount-ment {
+    color:red;
+    text-align: center;
+    font-size: 12px;
+}

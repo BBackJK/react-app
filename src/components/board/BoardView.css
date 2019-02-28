@@ -1,0 +1,57 @@
+.board-css {
+    text-align: center;
+}
+
+.board-table {
+    /* margin: 70px 100px; */
+    margin-bottom: 100px;
+    width: 100%;
+    border-collapse: collapse;
+    text-align: center;
+    line-height: 1.5;
+    /* border: 1px solid #ccc; */
+    /* margin: 20px 10px; */
+}
+
+.board-thead {
+    /* border-right: 1px solid #ccc;
+    border-left: 1px solid #ccc; */
+    border-bottom: 1px solid #ddd;
+    background: white;
+}
+
+.empty-tbody {
+    color:#ccc;
+}
+
+.board-th {
+    padding: 10px;
+    font-weight: bold;
+    vertical-align: top;
+}
+
+.board-tr {
+    cursor: pointer;
+}
+
+.board-td {
+    width: 300px;
+    padding: 10px;
+    vertical-align: top;
+    border-bottom: 1px solid #ccc;
+}
+
+.write-btn {
+    margin : auto 100px;
+    background-color: white;
+    float : right;
+    height : 40px;
+    width: 80px;
+    font-size : 15px;
+    border-radius: 5px;
+}
+
+.write-link {
+    text-decoration: none;
+    color : black;
+}
