@@ -13,26 +13,24 @@ export function loginRequest(email, pw) {
 
         return axios.post('http://localhost:5000/login',{email, pw})
             .then((res) => {
-                console.log("actions`s axios success email:" + email);
+                console.log(res);
                 dispatch(loginSuccess(email));
             })
             .catch((err) => {
+                console.log(err);
                 dispatch(loginFailure());
-                console.log("loginFail");
             })
     };
 }
 
 export function login() {
     return {
-        // type : AUTH_LOGIN
         type: types.AUTH_LOGIN
     };
 }
 
 export function loginSuccess(email) {
     return {
-        // type : AUTH_LOGIN_SUCCESS,
         type : types.AUTH_LOGIN_SUCCESS,
         email
     };
@@ -40,8 +38,43 @@ export function loginSuccess(email) {
 
 export function loginFailure() {
     return {
-        // type : AUTH_LOGIN_FAILURE
         type : types.AUTH_GET_STATUS_FAILURE
+    };
+}
+
+/**
+ * sign up action method
+ */
+export function signUpRequest(signUpData) {
+    return (dispatch) => {
+        dispatch(signUp());
+
+        return axios.post('http://localhost:5000/sign-up',signUpData)
+            .then((res) => {
+                dispatch(signUpSuccess());
+            })
+            .catch((err) => {
+                dispatch(signUpFailure(err.response.data));
+            });
+    };
+}
+
+export function signUp() {
+    return {
+        type : types.AUTH_SIGN_UP
+    };
+}
+
+export function signUpSuccess() {
+    return {
+        type : types.AUTH_SIGN_UP_SUCCESS
+    };
+}
+
+export function signUpFailure(error) {
+    return {
+        type : types.AUTH_SIGN_UP_FAILURE,
+        error
     };
 }
 
@@ -68,14 +101,12 @@ export function getStatusRequest(email) {
 
 export function getStatus() {
     return {
-        // type: AUTH_GET_STATUS
         type: types.AUTH_GET_STATUS
     };
 }
 
 export function getStatusSuccess() {
     return {
-        // type : AUTH_GET_STATUS_SUCCESS,
         type : types.AUTH_GET_STATUS_SUCCESS
     };
 }
@@ -83,7 +114,6 @@ export function getStatusSuccess() {
 export function getStatusFailure() {
     return {
         type : types.AUTH_GET_STATUS_FAILURE
-        // type : AUTH_GET_STATUS_FAILURE
     };
 }
 
@@ -117,12 +147,12 @@ export function updateRequest(updateData) {
 
         return axios.post('http://localhost:5000/update-info',updateData)
             .then((res) => {
-                console.log(res);
+                console.log("update :",res);
                 dispatch(updateSuccess());
             })
             .catch((err) => {
-                console.log(err);
-                dispatch(updateFailure());
+                console.log("update :", err);
+                dispatch(updateFailure(err.response.data));
             })
     }
 }
@@ -139,9 +169,10 @@ export function updateSuccess() {
     };
 }
 
-export function updateFailure() {
+export function updateFailure(error) {
     return {
-        type : types.AUTH_GET_STATUS_FAILURE
+        type : types.AUTH_STATUS_UPDATE_FAILURE,
+        error
     };
 }
 

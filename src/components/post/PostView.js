@@ -1,19 +1,49 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import Modal from 'react-awesome-modal';
+import { Link } from 'react-router-dom';
 
 import './PostView.css';
 
 class PostView extends React.Component {
     
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
+        this.state = {
+            isCancel : false,
+            checkBoard : ''
+        }
+
         this.cancel = this.cancel.bind(this);
 
     }
 
     cancel() {
-        console.log(window.history.back());
+        console.log(this.props.mode);
+        this.setState({
+            isCancel : true
+        });
+        switch(this.props.mode) {
+            case '1':
+                this.setState({
+                    checkBoard : 'front'
+                });
+                break;
+            case '2':
+                this.setState({
+                    checkBoard : 'back'
+                });
+                break;
+            case '3':
+                this.setState({
+                    checkBoard : 'common'
+                });
+                break;
+            default:
+                console.log("default");
+        };
     }
+
 
     render() {
         console.log(this.props.post);
@@ -23,7 +53,7 @@ class PostView extends React.Component {
                     <table className="post-table">
                         <thead>
                         <tr className="post-table-tr">
-                            <th className="post-table-th">Name</th>
+                            <th className="post-table-th">Nickname</th>
                             <td className="post-table-td">
                                 {this.props.post.user_name}
                             </td>   
@@ -61,17 +91,26 @@ class PostView extends React.Component {
                         onClick={this.cancel}>
                         Cancel    
                     </button>
+                    <section>
+                    <Modal visible={this.state.isCancel} width="400" height="300">
+                        <div>
+                            <Link to={`/${this.state.checkBoard}`} className="pv-modalLink"><h2 className="pv-link-ment">게시판으로 이동하시겠습니까?</h2></Link>
+                        </div>
+                    </Modal>
+                    </section>
             </div>
         );
     };
 };
 
 PostView.propsTypes = {
-    post : PropTypes.object
+    post : PropTypes.object,
+    mode : PropTypes.String
 };
 
 PostView.defaultTypes = {
-    post : []
+    post : [],
+    mode : ''
 };
 
 export default PostView;

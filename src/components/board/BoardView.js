@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Link , Redirect } from 'react-router-dom';
 
+import { FriendBarView } from '../index';
 import './BoardView.css';
 
 class BoardView extends React.Component {
@@ -9,31 +10,14 @@ class BoardView extends React.Component {
         super(props);
         this.state = {
             isClick : false,
-            // boardMode : '',
             seq : Number
         };
         this.click = this.click.bind(this);
     };
 
-    componentWillMount() {
-        console.log(this.props.mode);
-        // if(this.props.mode === "1") {
-        //     console.log("mode 1");
-        //     this.setState({
-        //         boardMode : '1'
-        //     });
-        // }else if(this.props.mode === "2") {
-        //     console.log("mode 2");
-        //     this.setState({
-        //         boardMode : '2'
-        //     });
-        // }else if(this.props.mode === "3") {
-        //     console.log("mode 3");
-        //     this.setState({
-        //         boardMode : '3'
-        //     })
-        // }
-    };
+    componentWillUnmount() {
+        document.removeEventListener("unmount",this.click);
+    }
 
     click(seq) {
         this.setState({
@@ -67,96 +51,101 @@ class BoardView extends React.Component {
 
         const frontView = (
             <div className="board-css">
-            <h2>Front Board</h2>
-                <table className="board-table">
-                    <thead className="board-thead">
-                        <tr>
-                            <th scope="cols" className="board-th">카테고리</th>
-                            <th scope="cols" className="board-th">제목</th>
-                            <th scope="cols" className="board-th">작성자</th>
-                            <th scope="cols" className="board-th">등록일</th>
-                        </tr>
-                    </thead>
-                    {
-                        (boardList[0]==null) ? emptyListView : listView
-                    }
-                </table>
-                <button 
-                    type="button"
-                    className="write-btn">
-                <Link to="/write/Front"
-                    className="write-link">
-                    Write    
-                </Link>
-                </button>
+                <div className="left-main">
+                <h2>Front Board</h2>
+                    <table className="board-table">
+                        <thead className="board-thead">
+                            <tr>
+                                <th scope="cols" className="board-th">카테고리</th>
+                                <th scope="cols" className="board-th">제목</th>
+                                <th scope="cols" className="board-th">작성자</th>
+                                <th scope="cols" className="board-th">등록일</th>
+                            </tr>
+                        </thead>
+                        {
+                            (boardList[0]==null) ? emptyListView : listView
+                        }
+                    </table>
+                    <button 
+                        type="button"
+                        className="write-btn">
+                    <Link to="/write/Front"
+                        className="write-link">
+                        Write    
+                    </Link>
+                    </button>
+                </div>
+                <div className="right-side">
+                    <FriendBarView/>
+                </div>
             </div>
         );
 
         const backView = (
             <div className="board-css">
-            <h2>Back Board</h2>
-                <table className="board-table">
-                    <thead className="board-thead">
-                        <tr>
-                            <th scope="cols" className="board-th">카테고리</th>
-                            <th scope="cols" className="board-th">제목</th>
-                            <th scope="cols" className="board-th">작성자</th>
-                            <th scope="cols" className="board-th">등록일</th>
-                        </tr>
-                    </thead>
-                    {
-                        (boardList[0]==null) ? emptyListView : listView
-                    }
-                </table>
-                <button 
-                    type="button"
-                    className="write-btn">
-                <Link to="/write/Back"
-                    className="write-link">
-                    Write    
-                </Link>
-                </button>
+                <div className="left-main">
+                <h2>Back Board</h2>
+                    <table className="board-table">
+                        <thead className="board-thead">
+                            <tr>
+                                <th scope="cols" className="board-th">카테고리</th>
+                                <th scope="cols" className="board-th">제목</th>
+                                <th scope="cols" className="board-th">작성자</th>
+                                <th scope="cols" className="board-th">등록일</th>
+                            </tr>
+                        </thead>
+                        {   
+                            (boardList[0]==null) ? emptyListView : listView
+                        }
+                    </table>
+                    <button 
+                        type="button"
+                        className="write-btn">
+                    <Link to="/write/Back"
+                        className="write-link">
+                        Write    
+                    </Link>
+                    </button>
+                </div>
+                <div className="right-side">
+                    <FriendBarView/>
+                </div>
             </div>
         );
 
         const commonView = (
             <div className="board-css">
-            <h2>Common Board</h2>
-                <table className="board-table">
-                    <thead className="board-thead">
-                        <tr>
-                            <th scope="cols" className="board-th">카테고리</th>
-                            <th scope="cols" className="board-th">제목</th>
-                            <th scope="cols" className="board-th">작성자</th>
-                            <th scope="cols" className="board-th">등록일</th>
-                        </tr>
-                    </thead>
-                    {
-                        (boardList[0]==null) ? emptyListView : listView
-                    }
-                </table>
-                <button 
-                    type="button"
-                    className="write-btn">
-                <Link to="/write/Common"
-                    className="write-link">
-                    Write    
-                </Link>
-                </button>
+                <div className="left-main">
+                <h2>Common Board</h2>
+                    <table className="board-table">
+                        <thead className="board-thead">
+                            <tr>
+                                <th scope="cols" className="board-th">카테고리</th>
+                                <th scope="cols" className="board-th">제목</th>
+                                <th scope="cols" className="board-th">작성자</th>
+                                <th scope="cols" className="board-th">등록일</th>
+                            </tr>
+                        </thead>
+                        {
+                            (boardList[0]==null) ? emptyListView : listView
+                        }
+                    </table>    
+                    <button 
+                        type="button"
+                        className="write-btn">
+                    <Link to="/write/Common"
+                        className="write-link">
+                        Write    
+                    </Link>
+                    </button>
+                </div>
+                <div className="right-side">
+                    <FriendBarView/>
+                </div>
             </div>
         );
 
         if(!this.state.isClick) {
-            // switch(this.props.mode) {
-            //     case "1":
-            //         return frontView;
-            //     case "2":
-            //         return backView;
-            //     case "3":
-            //         return commonView;
-            //     default:
-            //         return window.history.back();
-            // }
             if (this.props.mode === "1") {
                 return frontView;
             }else if(this.props.mode === "2") {
@@ -165,7 +154,7 @@ class BoardView extends React.Component {
                 return commonView;
             }
         } else {
-            return <Redirect to={`/post/${this.state.seq}`} />
+            return <Redirect to={`/post/${this.state.seq}/${this.props.mode}`} />
         }
     };
 };

@@ -19,6 +19,11 @@ class LoginView extends React.Component {
         this.loginSubmit = this.loginSubmit.bind(this);
     }
 
+    componentWillUnmount() {
+        document.removeEventListener("unmount", this.updateInput);
+        document.removeEventListener("unmount", this.loginSubmit);
+    }
+
     updateInput = (e) => {
         this.setState({
             [e.target.name]:e.target.value
@@ -48,53 +53,46 @@ class LoginView extends React.Component {
     };
 
     render() {
-        const successLogin = this.state.successLogin;
-
-        if(!successLogin){
-            return (
-                <div className="login-css">
-                    <form 
-                        className="login-form"
-                        onSubmit={this.loginSubmit}>
-                        <h2 className="login-form-header"> Login</h2>
-                        <input 
-                            type="text" 
-                            className="login-form-input" 
-                            placeholder="Your Email..." 
-                            name="email"
-                            value={this.state.email}
-                            onChange={this.updateInput}
-                            required autoFocus/>
-                        <input 
-                            type="password" 
-                            className="login-form-input" 
-                            placeholder="Email to Password..."
-                            name="password"
-                            value={this.state.password}
-                            onChange={this.updateInput}
-                            required />
-                        <p className="login-ment">{this.state.ment}</p>
-                        <button className="loginBtn" type="submit">Login</button>
-                        <p className="forgot-ment">
-                            <Link to="/findAccount">
-                                Forgot account?
-                            </Link>
-                        </p>
-                    </form>
-                </div>
-            );
-        }else {
-            return (
-                <div>
-                <Modal visible={true} width="400" height="300" effect="fadeInUp" className="auth-modal">
+        return (
+            <div className="login-css">
+                <form 
+                    className="login-form"
+                    onSubmit={this.loginSubmit}>
+                    <h2 className="login-form-header"> Login</h2>
+                    <input 
+                        type="text" 
+                        className="login-form-input" 
+                        placeholder="Your Email..." 
+                        name="email"
+                        value={this.state.email}
+                        onChange={this.updateInput}
+                        required autoFocus/>
+                    <input 
+                        type="password" 
+                        className="login-form-input" 
+                        placeholder="Email to Password..."
+                        name="password"
+                        value={this.state.password}
+                        onChange={this.updateInput}
+                        required />
+                    <p className="login-ment">{this.state.ment}</p>
+                    <button className="loginBtn" type="submit">Login</button>
+                    <p className="forgot-ment">
+                        <Link to="/findAccount">
+                            Forgot account?
+                        </Link>
+                    </p>
+                </form>
+                <section>
+                <Modal visible={this.state.successLogin} width="400" height="300">
                     <div>
                         <h1 className="modal-title">로그인 성공</h1>
-                        <Link to="/" className="auth-popUpLink">홈페이지로 이동하시겠습니까?</Link>
+                        <Link to="/" className="login-modalLink"><p className="login-link-ment">홈페이지로 이동하시겠습니까?</p></Link>
                     </div>
                 </Modal>
-                </div>
-            )
-        }
+                </section>
+            </div>
+        );
     };
 };
 

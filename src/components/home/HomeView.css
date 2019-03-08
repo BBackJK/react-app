@@ -1,3 +1,17 @@
+body {
+    margin : 0;
+}
+
 .home-css {
     text-align: center;
+}
+
+.left-main {
+    width: 92%;
+    float: left;
+}
+
+.right-side {
+    float: right;
+    width: 8%;
 }

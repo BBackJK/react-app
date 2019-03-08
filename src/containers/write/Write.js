@@ -1,7 +1,5 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
-import Modal from 'react-awesome-modal';
 
 import { Title , WriteView } from '../../components';
 import { writeRequest } from '../../actions/board';
@@ -37,26 +35,13 @@ class Write extends React.Component {
     }
 
     render() {
-        if(storage.get('userInfo') != null) {
-            return(
-                <div>
-                    <Title/>
-                    <WriteView onWrite={this.writeSubmit}
-                                board={this.props.match.params.board}/>
-                </div>
-            )
-        }else {
-            return (
-                <div>
-                <Modal visible={true} width="400" height="300" effect="fadeInUp" className="auth-modal">
-                    <div>
-                        <h1 className="modal-title">로그인상태가 아닙니다.</h1>
-                        <Link to="/login" className="auth-popUpLink">로그인페이지로 이동하시겠습니까?</Link>
-                    </div>
-                </Modal>
-                </div>
-            )
-        }
+        return(
+            <div>
+                <Title/>
+                <WriteView onWrite={this.writeSubmit}
+                            board={this.props.match.params.board}/>
+            </div>
+        )
     }
 }
 

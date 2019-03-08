@@ -22,6 +22,13 @@ class FindAccountView extends React.Component {
         this.findEmailSubmit = this.findEmailSubmit.bind(this);
         this.findPWSubmit = this.findPWSubmit.bind(this);
     }
+
+    componentWillUnmount() {
+        document.removeEventListener("unmount",this.updateInput);
+        document.removeEventListener("unmount",this.findEmailSubmit);
+        document.removeEventListener("unmount",this.findPWSubmit);
+    }
+
     updateInput = (e) => {
         this.setState({
             [e.target.name]:e.target.value

@@ -35,10 +35,10 @@ class Login extends React.Component {
     
     render() {
         return (
-        <div>
-            <Title/>
-            <LoginView onLogin={this.loginSubmit}/>
-        </div>
+            <div>
+                <Title/>
+                <LoginView onLogin={this.loginSubmit}/>
+            </div>
         )
     }
 }

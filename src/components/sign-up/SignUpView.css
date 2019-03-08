@@ -1,0 +1,77 @@
+.signUp-css {
+    box-sizing: border-box;
+}
+
+.signUp-title {
+    margin : -28px -30px 10px -29px;
+    padding: 15px 25px;
+    line-height: 30px;
+    font-size: 25px;
+    font-weight: 300;
+    color: #ADADAD;
+    text-align:center;
+    background: #f7f7f7;
+}
+
+.signUp-form {
+    margin: 70px auto;
+    width: 300px;
+    height: 700px;
+    padding: 30px 30px;
+    background: white;
+    border: 1px solid #c4c4c4;
+}
+
+.signUp-btn {
+    background-color: white;
+    height: 40px;
+    float: left;
+    width: 35%;
+    border-radius: 5px;
+    cursor: pointer; 
+    font-size: 15px;
+    /* margin-bottom : 0%; */
+}
+
+.cancel-btn {
+    background-color: white;
+    height: 40px;
+    float: right;
+    width: 35%;
+    border-radius: 5px;
+    cursor: pointer; 
+    font-size: 15px;
+}
+
+.signUp-form-input {
+    width: 95%;
+    height: 50px;
+    padding-left:10px;
+    font-size: 15px;
+    background: #fff;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin-top: 5px;
+    margin-bottom: 7px;
+}
+
+.signUp-form-input:focus {
+    border-color:#6e8095;
+    outline: none;
+}
+
+.signup-ment {
+    text-align: center;
+    font-size : 12px;
+    color: red;
+}
+
+.sign-modalLink {
+    font-size: 12px;
+    color: black;
+    text-decoration: none;
+}
+
+.sign-link-ment {
+    text-align: center;
+}

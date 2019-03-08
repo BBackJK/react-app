@@ -1,33 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import Modal from 'react-awesome-modal';
 
 import './NavBar.css';
 
 class NavBar extends React.Component {
-
-    constructor(props) {
-        super(props);
-        this.state = {
-            isLogout : false,
-            mypage : 'mypage'
-        }
-        this.handleLogOut = this.handleLogOut.bind(this);
-    }
-
-    handleLogOut() {
-        this.props.onLogout().then(
-            (success)=> {
-                if(success) {
-                    console.log("로그아웃 성공했지롱");
-                    this.setState({
-                        isLogout:true
-                    })
-                }
-            }
-        )
-    };
 
     render() {
 
@@ -45,16 +22,16 @@ class NavBar extends React.Component {
         const navLogoutView = (
             <div>
                 <li className="nav-li-right">
-                    <Link to={`/checkpw/${this.state.mypage}`} className="nav-a">My Page</Link>
+                    <Link to="/signUp" className="nav-a">Sign Up</Link>
                 </li>
                 <li className="nav-li-right">
-                    <Link to="" onClick={this.handleLogOut} className="nav-a">Logout</Link>
+                    <Link to="/my-page" className="nav-a">My Page</Link>
                 </li>
             </div>
         );
         
-        if(!this.state.isLogout){
-            return (
+        return (
+            <div>
                 <ul className="nav-ul">
                         <li className="nav-li-left">
                             <Link to="/home" className="nav-a">Home</Link>
@@ -65,32 +42,22 @@ class NavBar extends React.Component {
                         <li className="nav-li-left">
                             <Link to="/back" className="nav-a">Back</Link>    
                         </li>
-                        {this.props.isLoggedIn ? navLogoutView : navLoginView}
+                        <li className="nav-li-left">
+                            <Link to="/common" className="nav-a">Common</Link>    
+                        </li>
+                        {this.props.isLogged ? navLogoutView : navLoginView}
                 </ul>
-            );
-        }else {
-            return (
-                <div>
-                <Modal visible={true} width="400" height="300" effect="fadeInUp" className="auth-modal">
-                    <div>
-                        <h1 className="modal-title">로그아웃 성공</h1>
-                        <a href="http://localhost:3000/" className="auth-popUpLink">홈페이지로 이동하시겠습니까?</a>
-                    </div>
-                </Modal>
-                </div>
-            )
-        }
+            </div>
+        )
     };
 };
 
 NavBar.propTypes = {
-    isLoggedIn : PropTypes.bool,
-    onLogout : PropTypes.func
+    isLogged : PropTypes.bool
 };
 
 NavBar.defaultProps = {
-    isLoggedIn : false,
-    onLogout : () => { console.log("logout func is not defined");}
+    isLogged : false,
 };
 
 export default NavBar;

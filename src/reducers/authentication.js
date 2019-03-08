@@ -8,10 +8,12 @@ const initialState = {
         status : 'INIT'
     },
     signUp: {
-        status : 'INIT'
+        status : 'INIT',
+        error : ''
     },
     update : {
-        status : 'INIT'
+        status : 'INIT',
+        error : ''
     },
     delete : {
         status : 'INIT'
@@ -39,7 +41,6 @@ export default function authentication(state, action) {
             });
         
         case types.AUTH_LOGIN_SUCCESS:
-            // console.log("in reducer`s action email :" + action.email);
             return update(state, {
                 login : {
                     status : { $set : 'SUCCESS' }
@@ -56,6 +57,30 @@ export default function authentication(state, action) {
                 }
             });
 
+        /** sign up reduce */
+        case types.AUTH_SIGN_UP:
+            return update(state, {
+                signUp : {
+                    status : { $set : 'WAITING' }
+                }
+            });
+
+        case types.AUTH_SIGN_UP_SUCCESS:
+            return update(state, {
+                signUp : {
+                    status : { $set : 'SUCCESS' },
+                    error : { $set : '' }
+                }
+            });
+
+        case types.AUTH_SIGN_UP_FAILURE:
+            return update(state, {
+                signUp : {
+                    status : { $set : 'FAILURE' },
+                    error : { $set : action.error }
+                }
+            });
+        
         /**Get Status Info reduce */
         case types.AUTH_GET_STATUS:
             return update(state, {
@@ -107,7 +132,8 @@ export default function authentication(state, action) {
         case types.AUTH_STATUS_UPDATE_FAILURE:
             return update(state, {
                 update : {
-                    status : { $set : 'FAILURE'}
+                    status : { $set : 'FAILURE'},
+                    error : { $set : action.error }
                 }
             });
 

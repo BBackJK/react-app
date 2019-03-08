@@ -15,6 +15,10 @@ class CheckPWView extends React.Component {
         this.updateInput = this.updateInput.bind(this);
     };
 
+    componentWillUnmount() {
+        document.removeEventListener("unmount",this.updateInput);
+    }
+
     updateInput = (e) => {
         if(storage.get('userInfo').password === e.target.value) {
             this.props.checkingPW(true);

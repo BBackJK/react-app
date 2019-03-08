@@ -1,10 +1,24 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-import { PostView , Title } from '../../components';
-import { NavBar } from '../../containers';
+import { PostView , Title , NavBar } from '../../components';
+import storage from '../../lib/storage';
 
 class Post extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            isLogged : false
+        };
+    };
+
+    componentDidMount() {
+        if(storage.get('loggedUser') != null) {
+            this.setState({
+                isLogged : true
+            });
+        }
+    }
 
     render() {
         //this.props.posts는 store(reduce)에 저장되어있는 list. 그안에 data를 가져왔고,
@@ -13,8 +27,9 @@ class Post extends React.Component {
         return(
             <div>
                 <Title/>
-                <NavBar/>
-                <PostView post={clickPost}/>
+                <NavBar isLogged={this.state.isLogged}/>
+                <PostView post={clickPost}
+                          mode={this.props.match.params.mode}/>
             </div>
         );
     };

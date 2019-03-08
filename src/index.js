@@ -44,7 +44,7 @@ ReactDOM.render(
             <Route path="/findAccount" component={FindAccount}/>
             <Route path="/signUp" component={SignUp}/>
             <Route path="/write/:board" component={Write}/>
-            <Route path="/post/:seq" component={Post}/>
+            <Route path="/post/:seq/:mode" component={Post}/>
             <Route path="/my-page" component={MyPage}/>
             <Route component={NotPage}/>
         </Switch>

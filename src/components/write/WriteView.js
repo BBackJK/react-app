@@ -40,6 +40,12 @@ class WriteView extends React.Component {
         }
     }
 
+    componentWillUnmount() {
+        document.removeEventListener("unmount",this.writeSubmit);
+        document.removeEventListener("unmount",this.updateInput);
+        document.removeEventListener("unmount",this.cancel);
+    }
+
     writeSubmit = (e) => {
         e.preventDefault();
 
@@ -47,7 +53,7 @@ class WriteView extends React.Component {
             category : this.state.category,
             title : this.state.title,
             contents : this.state.contents,
-            name : storage.get('userInfo').name,
+            nickname : storage.get('userInfo').nickname,
             div : (this.props.board).toLowerCase()
         };
 
@@ -59,27 +65,23 @@ class WriteView extends React.Component {
                 isCategory : true
             })
         }else {
-            this.setState({
-                isCategory : false
-            })
-        }
-        
-        this.props.onWrite(writeData).then (
-            (success) => {
-                if(success) {
-                    this.setState({
-                        category : '',
-                        title : '',
-                        contents : '',
-                        isCategory : false,
-                        isWriteSuccess : true
-                    });
-                    console.log('작성 성공!');
-                }else {
-                    console.log('작성 실패다');
+            this.props.onWrite(writeData).then (
+                (success) => {
+                    if(success) {
+                        this.setState({
+                            category : '',
+                            title : '',
+                            contents : '',
+                            isCategory : false,
+                            isWriteSuccess : true
+                        });
+                        console.log('작성 성공!');
+                    }else {
+                        console.log('작성 실패다');
+                    }
                 }
-            }
-        )
+            )
+        }
         
     }
 
@@ -141,75 +143,20 @@ class WriteView extends React.Component {
             </div>
         );
 
-        // const boardWriteView = (
-        //     <div className="write-css">
-        //         <h1 className="write-form-title">{this.props.board} Write</h1>
-        //         <form onSubmit={this.writeSubmit}>
-        //             <table className="write-table">
-        //                 <thead>
-        //                     <tr>
-        //                         <th className="write-table-th">Category</th>
-        //                         <td className="write-table-td">
-        //                             {frontCategory}                                    
-        //                         </td>
-        //                     </tr>
-        //                 </thead>
-        //                 <tbody>
-        //                 <tr>
-        //                     <th className="write-table-th">Title</th>
-        //                     <td className="write-table-td">
-        //                         <input 
-        //                             type="text"
-        //                             className="write-table-input"
-        //                             value={this.state.title}
-        //                             onChange={this.updateInput}
-        //                             name="title"
-        //                             required/>
-        //                     </td>                               
-        //                 </tr>
-        //                 <tr>    
-        //                     <th className="write-table-th"> Contents </th>
-        //                     <td colSpan="2">
-        //                         <textarea 
-        //                             rows="17"
-        //                             cols="50"
-        //                             className="write-table-textarea"
-        //                             value={this.state.contents}
-        //                             onChange={this.updateInput}
-        //                             name="contents"></textarea>
-        //                     </td>                            
-        //                 </tr>
-        //                 <tr>
-        //                     <th>File</th>
-        //                     <td className="write-table-td">
-        //                         <input 
-        //                             type="file"
-        //                             name="file"/>
-        //                     </td>                            
-        //                 </tr>
-        //                 </tbody>
-        //             </table>
-        //             <p className="write-ment">
-        //             {   
-        //                 this.state.isCategory && "카테고리를 선택하여 주세요."
-        //             }  
-        //             </p>
-        //             <button 
-        //                 type="submit"    
-        //                 className="write-ok-btn">
-        //                 Write
-        //             </button>
-        //             <button 
-        //                 type="button"
-        //                 className="write-cancel-btn"
-        //                 onClick={this.cancel}>
-        //                 Cancel    
-        //             </button>
-        //         </form>
-        //     </div>
-        // )
-        
-        if(!this.state.isWriteSuccess) {
+        if(storage.get('loggedUser') == null ) {
+            return(
+                <div>
+                <section>
+                <Modal visible={true} width="400" height="300" effect="fadeInUp">
+                    <div>
+                        <h1 className="modal-title">로그인상태가 아닙니다</h1>
+                        <Link to="/login" className="write-modalLink"><p className="write-link-ment">로그인페이지로 이동하시겠습니까?</p></Link>
+                    </div>
+                </Modal>
+                </section>
+                </div>
+            )
+        } else {
             if(this.state.choiceBoard === '1') {
                 return(
                     <div className="write-css">
@@ -249,14 +196,6 @@ class WriteView extends React.Component {
                                         name="contents"></textarea>
                                 </td>
                             </tr>
-                            {/* <tr>
-                                <th>File</th>
-                                <td className="write-table-td">
-                                    <input 
-                                        type="file"
-                                        name="file"/>
-                                </td>
-                            </tr> */}
                             </tbody>
                         </table>
                         <p className="write-ment">
@@ -276,6 +215,14 @@ class WriteView extends React.Component {
                             Cancel    
                         </button>
                         </form>
+                        <section>
+                        <Modal visible={this.state.isWriteSuccess} width="400" height="300" effect="fadeInUp">
+                            <div>
+                                <h1 className="modal-title">글작성 성공</h1>
+                                <Link to="/front" className="write-modalLink"><p className="write-link-ment">게시판으로 이동하시겠습니까?</p></Link>
+                            </div>
+                        </Modal>
+                        </section>
                     </div>
                 )
             }else {
@@ -293,7 +240,7 @@ class WriteView extends React.Component {
                                 </tr>
                             </thead>
                             <tbody>
-                            <tr>
+                            <tr>    
                                 <th className="write-table-th">Title</th>
                                 <td className="write-table-td">
                                     <input 
@@ -317,14 +264,6 @@ class WriteView extends React.Component {
                                         name="contents"></textarea>
                                 </td>
                             </tr>
-                            {/* <tr>
-                                <th>File</th>
-                                <td className="write-table-td">
-                                    <input 
-                                        type="file"
-                                        name="file"/>
-                                </td>
-                            </tr> */}
                             </tbody>
                         </table>
                         <p className="write-ment">
@@ -344,35 +283,19 @@ class WriteView extends React.Component {
                             Cancel    
                         </button>
                         </form>
+                        <section>
+                        <Modal visible={this.state.isWriteSuccess} width="400" height="300" effect="fadeInUp">
+                            <div>
+                                <h1 className="modal-title">글작성 성공</h1>
+                                {/* front게시판인지 back게시판인지 확인하고 링크걸기 */}
+                                {this.state.choiceBoard ==='2'?
+                                    <Link to="/back" className="write-modalLink"><p className="write-link-ment">게시판으로 이동하시겠습니까?</p></Link> :
+                                    <Link to="/common" className="write-modalLink"><p className="write-link-ment">게시판으로 이동하시겠습니까?</p></Link>}
+                            </div>
+                        </Modal>
+                        </section>
                     </div>
                 )
-            }
-        }else {
-            if(this.state.choiceBoard === '1') {
-                return (
-                    <div>
-                    <Modal visible={true} width="400" height="300" effect="fadeInUp" className="auth-modal">
-                        <div>
-                            <h1 className="modal-title">글작성 성공</h1>
-                            <Link to="/front" className="auth-popUpLink">게시판으로 이동하시겠습니까?</Link>
-                        </div>
-                    </Modal>
-                    </div>
-                )
-            }else {
-                return (
-                    <div>
-                    <Modal visible={true} width="400" height="300" effect="fadeInUp" className="auth-modal">
-                        <div>
-                            <h1 className="modal-title">글작성 성공</h1>
-                            {/* front게시판인지 back게시판인지 확인하고 링크걸기 */}
-                            {this.state.choiceBoard ==='2'?
-                                <Link to="/back" className="auth-popUpLink">게시판으로 이동하시겠습니까?</Link> :
-                                <Link to="/common" className="auth-popUpLink">게시판으로 이동하시겠습니까?</Link>}
-                        </div>
-                    </Modal>
-                    </div>
-                )  
             }
         }
     }

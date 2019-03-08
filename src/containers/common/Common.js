@@ -1,9 +1,9 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-import { BoardView , Title } from '../../components';
-import { NavBar } from '../../containers';
+import { BoardView , Title , NavBar } from '../../components';
 import { boardListRequest } from '../../actions/board';
+import storage from '../../lib/storage';
 
 class Common extends React.Component{
     constructor() {
@@ -14,6 +14,13 @@ class Common extends React.Component{
     };
 
     componentDidMount() {
+
+        if(storage.get('loggedUser') != null) {
+            this.setState({
+                isLogged : true
+            });
+        }
+
         this.props.boardListRequest('common').then(
             () => {
                 console.log(this.props.status.data);
@@ -29,7 +36,7 @@ class Common extends React.Component{
         return (
             <div className="back-css">
                 <Title/>
-                <NavBar/>
+                <NavBar isLogged={this.state.isLogged}/>
                 <BoardView mode={"3"}
                             list={this.props.status.data}/>
             </div>

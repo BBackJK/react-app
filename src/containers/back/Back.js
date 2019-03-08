@@ -1,9 +1,9 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-import { BoardView , Title } from '../../components';
-import { NavBar } from '../../containers';
+import { BoardView , Title , NavBar } from '../../components';
 import { boardListRequest } from '../../actions/board';
+import storage from '../../lib/storage';
 
 class Back extends React.Component{
     constructor() {
@@ -14,6 +14,13 @@ class Back extends React.Component{
     };
 
     componentDidMount() {
+
+        if(storage.get('loggedUser') != null) {
+            this.setState({
+                isLogged : true
+            });
+        }
+
         this.props.boardListRequest('back').then(
             () => {
                 console.log(this.props.status.data);
@@ -29,7 +36,7 @@ class Back extends React.Component{
         return (
             <div className="back-css">
                 <Title/>
-                <NavBar/>
+                <NavBar isLogged={this.state.isLogged}/>
                 <BoardView mode={"2"}
                             list={this.props.status.data}/>
             </div>
