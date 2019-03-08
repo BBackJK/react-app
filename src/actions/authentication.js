@@ -79,9 +79,79 @@ export function signUpFailure(error) {
 }
 
 /**
+ *  find action method
+ */
+export function findEmailRequest(findEmailData) {
+    return (dispatch) => {
+        dispatch(findEmail());
+        return axios.post('http://localhost:5000/find-account',findEmailData)
+                .then((res) => {
+                    console.log(res);
+                    dispatch(findEmailSuccess(res.data[0].email));
+                })
+                .catch((err) => {
+                    console.log(err);
+                    dispatch()
+                })
+    }
+}
+
+export function findEmail() {
+    return {
+        type : types.AUTH_FIND_EMAIL
+    };
+}
+
+export function findEmailSuccess(email) {
+    return {
+        type : types.AUTH_FIND_EMAIL_SUCCESS,
+        email
+    };
+}
+
+export function findEmailFailure() {
+    return {
+        type : types.AUTH_FIND_EMAIL_FAILURE
+    };
+}
+
+export function findPWRequest(findPWdata) {
+    return (dispatch) => {
+        dispatch(findPW());
+        return axios.post('http://localhost:5000/find-account',findPWdata)
+                .then((res) => {
+                    console.log(res);
+                    dispatch(findPWSuccess(res.data[0].password));
+                })
+                .catch((err) => {
+                    console.log(err);
+                    dispatch(findPWFailure());
+                })
+    }
+}
+
+export function findPW() {
+    return {
+        type : types.AUTH_FIND_PW
+    };
+}
+
+export function findPWSuccess(password){
+    return {
+        type : types.AUTH_FIND_PW_SUCCESS,
+        password
+    };
+}
+
+export function findPWFailure() {
+    return {
+        type : types.AUTH_FIND_PW_FAILURE
+    };
+}
+
+/**
  * getStatus Action Method
  */
-
 export function getStatusRequest(email) {
      return (dispatch) => {
         dispatch(getStatus());

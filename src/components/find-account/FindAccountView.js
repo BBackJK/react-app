@@ -1,5 +1,5 @@
 import React from 'react';
-import axios from 'axios';
+import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
 import './FindAccountView.css';
@@ -41,18 +41,23 @@ class FindAccountView extends React.Component {
             name_email : this.state.name_email,
             phone : this.state.phone
         }
-        axios.post('http://localhost:5000/find-account',findEmailData)
-            .then((res)=>{
-                this.setState({
-                    onEmail : true ,
-                    ment_email : '이메일은 ' + res.data[0].email + ' 입니다.'
-                })
-            })
-            .catch((err)=>{
-                this.setState({
-                    ment_email : '정보를 찾을 수 없습니다. 다시한번 확인해주세요.'  
-                })
-            })
+
+        this.props.onFindEmail(findEmailData).then(
+            (success) => {
+                if(!success) {
+                    this.setState({
+                        onEmail : false,
+                        ment_email : '정보를 찾을 수 없습니다. 다시 한번 확인하여주세요.'
+                    });
+                }else {
+                    console.log(success);
+                    this.setState({
+                        onEmail : true,
+                        ment_email : '이메일은' + success + '입니다.'
+                    });
+                }
+            }
+        )
     }
 
     findPWSubmit = (e) => {
@@ -60,22 +65,24 @@ class FindAccountView extends React.Component {
         const findPWdata = {
             email : this.state.email,
             name_pw : this.state.name_pw
-        }
+        }        
 
-        axios.post('http://localhost:5000/find-account',findPWdata)
-            .then((res) => {
-                console.log("RESPONSE RECEIVED : " ,res);
-                this.setState({
-                    onPassword : true,
-                    ment_pw : '비밀번호는 ' + res.data[0].password + ' 입니다'
-                })
-            })
-            .catch((err) =>{
-                this.setState({
-                    ment_pw : '정보를 찾을 수 없습니다. 다시한번 확인해주세요.'  
-                })
-            })
-        
+        this.props.onFindPW(findPWdata).then(
+            (success) => {
+                if(!success) {
+                    this.setState({
+                        ment_pw : '정보를 찾을 수 없습니다. 다시 한번 확인하여 주세요.',
+                        onPassword : false
+                    });
+                }else {
+                    console.log(success);
+                    this.setState({
+                        onPassword : true,
+                        ment_pw : '비밀번호는' + success + '입니다'
+                    });
+                }
+            }
+        )
     }
 
     cancel() {
@@ -179,5 +186,16 @@ class FindAccountView extends React.Component {
         );
     }
 }
+
+FindAccountView.propTypes = {
+    onFindEmail : PropTypes.func,
+    onFindPW : PropTypes.func
+};
+
+FindAccountView.protoTypes = {
+    onFindEmail : (findEmailData) => {console.error("findEmail function is not defined");},
+    onFindPW : (findPWdata) => {console.error("findPW function is not defined");}
+}
+
 
 export default FindAccountView;

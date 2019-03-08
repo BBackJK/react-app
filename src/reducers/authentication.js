@@ -4,12 +4,18 @@ import * as types from '../actions/actionTypes';
 import update from 'react-addons-update';
 
 const initialState = {
-    login: {
+    login : {
         status : 'INIT'
     },
-    signUp: {
+    signUp : {
         status : 'INIT',
         error : ''
+    },
+    find : {
+        emailStatus : 'INIT',
+        pwStatus : 'INIT',
+        email : '',
+        password : ''
     },
     update : {
         status : 'INIT',
@@ -18,7 +24,7 @@ const initialState = {
     delete : {
         status : 'INIT'
     },
-    status: {
+    status : {
         valid : false, //getStatus에 대한 초기state status값.
         isLoggedIn : false,
         userEmail : ''
@@ -81,6 +87,51 @@ export default function authentication(state, action) {
                 }
             });
         
+        /** find info reduce */
+        case types.AUTH_FIND_EMAIL:
+            return update(state, {
+                find : {
+                    emailStatus : { $set : 'WAITING' }
+                }
+            });
+
+        case types.AUTH_FIND_EMAIL_SUCCESS:
+            return update(state, {
+                find : {
+                    emailStatus : { $set : 'SUCCESS' },
+                    email : { $set : action.email}
+                }
+            });
+
+        case types.AUTH_FIND_EMAIL_FAILURE:
+            return update(state, {
+                find : {
+                    emailStatus : { $set : 'FAILURE' }
+                }
+            });
+
+        case types.AUTH_FIND_PW :
+            return update(state, {
+                find : {
+                    pwStatus : { $set : 'WAITING' }
+                }
+            });
+
+        case types.AUTH_FIND_PW_SUCCESS :
+            return update(state, {
+                find : {
+                    pwStatus : { $set : 'SUCCESS' },
+                    password : { $set : action.password }
+                }
+            });
+
+        case types.AUTH_FIND_PW_FAILURE : 
+            return update(state, {
+                find : {
+                    pwStatus : { $set : 'FAILURE' }
+                }
+            });
+            
         /**Get Status Info reduce */
         case types.AUTH_GET_STATUS:
             return update(state, {
